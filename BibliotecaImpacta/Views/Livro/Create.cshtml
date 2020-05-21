@@ -1,0 +1,76 @@
+﻿@model BibliotecaImpacta.Models.Livro
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Cadastro de Livro</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="row">
+            <div class="input-field col s8">
+                <i class="material-icons prefix">library_books</i>
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "active" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s8">
+                <i class="material-icons prefix">toc</i>
+                @Html.EditorFor(model => model.TotalPaginas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalPaginas, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.TotalPaginas, htmlAttributes: new { @class = "active" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s8">
+                <i class="material-icons prefix">library_add</i>
+                @Html.EditorFor(model => model.Quantidade, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Quantidade, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Quantidade, htmlAttributes: new { @class = "active" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s8 m7 l3">
+                <i class="material-icons prefix">person</i>
+                @Html.DropDownListFor(model => model.AutorId, new SelectList(ViewBag.Autores, "Value", "Text"), "Selecione um autor")
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s8 m7 l3">
+                <i class="material-icons prefix">category</i>
+                @Html.DropDownListFor(model => model.CategoriaId, new SelectList(ViewBag.Categorias, "Value", "Text"), "Selecione uma Categoria")
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s8">
+                <i class="material-icons prefix">edit</i>
+                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "active" })
+            </div>
+        </div>
+    </div>
+
+        <div class="form-group">
+            <button class="btn green waves-green waves-effect" type="submit" name="action">
+                Cadastrar
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+
+        
+    </div>
+}
