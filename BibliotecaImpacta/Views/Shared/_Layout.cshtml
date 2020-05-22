@@ -35,11 +35,13 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/materialize")
-    @RenderSection("scripts", required: false)
     <script type="text/javascript">
         $(document).ready(function () {
             $('select').formSelect();
+            $('.modal').modal();
         });
     </script>
+    @RenderSection("scripts", required: false)
+
 </body>
 </html>

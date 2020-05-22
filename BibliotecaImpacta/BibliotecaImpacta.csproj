@@ -133,6 +133,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\RetornaSelectListItem.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autor.cs" />
     <Compile Include="Models\Categoria.cs" />
@@ -187,6 +188,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Livro\Index.cshtml" />
     <Content Include="Views\Livro\Create.cshtml" />
+    <Content Include="Views\Livro\Details.cshtml" />
+    <Content Include="Views\Livro\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

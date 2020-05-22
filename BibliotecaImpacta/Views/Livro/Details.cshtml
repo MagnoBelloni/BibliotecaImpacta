@@ -1,0 +1,124 @@
+﻿@model IEnumerable<BibliotecaImpacta.Models.Livro>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col s12 m6">
+    <div class="card">
+        <div class="card-content">
+            <h2>Lista de Livros</h2>
+            <div class="form-group" style="padding:2% 0">
+                @Html.ActionLink("Cadastrar Livro", "Create", null, new { @class = "waves-effect waves-light btn" })
+            </div>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <table class="responsive-table bordered highlight">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Descricao)
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Quantidade)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TotalPaginas)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Categoria.Nome)
+                        </th>
+                        <th>
+                            Editar
+                        </th>
+                        <th>
+                            Excluir
+                        </th>
+                    </tr>
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descricao)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantidade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalPaginas)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                            </td>
+                            <td>
+                                <a class="btn-floating btn-large waves-effect waves-light red" data-id="0" href="@Url.Action("Edit", "Livro", new { Id = item.Id })"><i class="material-icons">edit</i></a>
+                            </td>
+                            <td>
+                                <a class="btnExcluirLivro btn-floating btn-large waves-effect waves-light red modal-trigger" data-id="@item.Id"><i class="material-icons">delete</i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+
+
+        </div>
+        <div class="card-action">
+            @Html.ActionLink("Voltar para a lista", "Index")
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h4>Você deseja excluir este livro?</h4>
+        <hr />
+        <p>Tem certeza que deseja excluir este livro? A ação não poderá ser desfeita.</p>
+    </div>
+    <div class="modal-footer">
+        @Html.AntiForgeryToken()
+        <button id="btnConfirmarExclusao" type="button" class="modal-close waves-effect waves-green btn-flat">Confirmar</button>
+    </div>
+</div>
+
+@section scripts{
+    <script defer>
+        var livroId;
+
+        $(".btnExcluirLivro").click(function () {
+            livroId = $(this).attr('data-id');
+            $("#modal").modal("open")
+        });
+
+        $("#btnConfirmarExclusao").click(function () {
+            var formulario = $('__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', formulario).val();
+
+            $.ajax({
+                url: 'Delete',
+                type: 'Post',
+                data: {
+                    __RequestVerificationToken: token,
+                    Id: livroId
+                },
+                success: function () {
+                    return window.location.reload();
+                }
+            });
+
+        });
+    </script>
+}

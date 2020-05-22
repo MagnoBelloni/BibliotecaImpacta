@@ -25,6 +25,16 @@ namespace BibliotecaImpacta.Migrations
                 new Autor { Nome = "Autor Inicial" }
             );
 
+            context.Livros.AddOrUpdate(new Livro
+            {
+                Nome = "Livro Inicial",
+                AutorId = 2,
+                CategoriaId = 2,
+                Descricao = "Livro de Teste",
+                Quantidade = 5,
+                TotalPaginas = 247
+            });
+
         }
     }
 }

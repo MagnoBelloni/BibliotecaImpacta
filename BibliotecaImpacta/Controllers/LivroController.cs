@@ -1,8 +1,11 @@
 ﻿using BibliotecaImpacta.DataContext;
+using BibliotecaImpacta.Helpers;
 using BibliotecaImpacta.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,44 +17,21 @@ namespace BibliotecaImpacta.Controllers
         // GET: Livro
         public ActionResult Index()
         {
-            List<Livro> Livros = DB.Livros.ToList();
-            return View(Livros);
+            return View();
         }
 
         // GET: Livro/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
-            return View();
+            List<Livro> livros = DB.Livros.ToList();
+            return View(livros);
         }
 
         // GET: Livro/Create
         public ActionResult Create()
         {
-            List<Autor> lAutores = DB.Autores.ToList();
-            List<Categoria> lCategorias = DB.Categorias.ToList();
-
-            List<SelectListItem> listaAutores = lAutores.ConvertAll(a =>
-            {
-               return new SelectListItem()
-               {
-                   Text = a.Nome,
-                   Value = a.Id.ToString(),
-                   Selected = false
-               };
-            });
-
-            List<SelectListItem> listaCategorias = lCategorias.ConvertAll(a =>
-            {
-                return new SelectListItem()
-                {
-                    Text = a.Nome,
-                    Value = a.Id.ToString(),
-                    Selected = false
-                };
-            });
-
-            @ViewBag.Autores = listaAutores;
-            @ViewBag.Categorias = listaCategorias;
+            @ViewBag.Autores = RetornaSelectListItem.Autores();
+            @ViewBag.Categorias = RetornaSelectListItem.Categorias();
 
             return View();
         }
@@ -68,10 +48,12 @@ namespace BibliotecaImpacta.Controllers
                     DB.Livros.Add(livro);
                     DB.SaveChanges();
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Details");
                 }
+                @ViewBag.Autores = RetornaSelectListItem.Autores();
+                @ViewBag.Categorias = RetornaSelectListItem.Categorias();
+
                 return View(livro);
-                
             }
             catch
             {
@@ -80,20 +62,39 @@ namespace BibliotecaImpacta.Controllers
         }
 
         // GET: Livro/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if(id.Equals(0))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Livro livro = DB.Livros.Find(id);
+
+            @ViewBag.Autores = RetornaSelectListItem.Autores();
+            @ViewBag.Categorias = RetornaSelectListItem.Categorias();
+
+
+            return View(livro);
         }
 
         // POST: Livro/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Livro livro)
         {
             try
             {
                 // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    DB.Livros.AddOrUpdate(livro);
+                    DB.SaveChanges();
+                    return RedirectToAction("Details");
+                }
 
-                return RedirectToAction("Index");
+                @ViewBag.Autores = RetornaSelectListItem.Autores();
+                @ViewBag.Categorias = RetornaSelectListItem.Categorias();
+
+                return View(livro);
             }
             catch
             {
@@ -101,26 +102,15 @@ namespace BibliotecaImpacta.Controllers
             }
         }
 
-        // GET: Livro/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Livro/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ContentResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var livro = DB.Livros.Find(id);
+            DB.Livros.Attach(livro);
+            DB.Livros.Remove(livro);
+            DB.SaveChanges();
+            return Content("Livro excluido com sucesso");
         }
+
     }
 }

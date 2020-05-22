@@ -1,53 +1,33 @@
-﻿@model IEnumerable<BibliotecaImpacta.Models.Livro>
-
-@{
+﻿@{
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Cadastrar Livro", "Create", null, new { @class = "waves-effect waves-light btn" })
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Autor)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Autor)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card light-blue darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Cadastrar um livro</span>
+                    <p>
+                        Cadastre um novo livro.
+                    </p>
+                </div>
+                <div class="card-action">
+                    @Html.ActionLink("Cadastrar", "Create")
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="card light-blue darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Listar livros</span>
+                    <p>
+                       Visualize todos os livro.
+                    </p>
+                </div>
+                <div class="card-action">
+                    @Html.ActionLink("Listar", "Details")
+                </div>
+            </div>
+        </div>
+    </div>
