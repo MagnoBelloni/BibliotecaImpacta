@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -37,11 +38,11 @@ namespace BibliotecaImpacta.Controllers
 
         public ActionResult Edit(int id)
         {
-            Autor autor = DB.Autores.Find(id);
-            if(autor.Id == 0)
+            if (id.Equals(0))
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Autor autor = DB.Autores.Find(id);
             return View(autor);
         }
 
