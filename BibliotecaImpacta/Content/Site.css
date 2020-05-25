@@ -1,6 +1,11 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿header {
+    display: block;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, div {
+    padding: 0;
+    border: 0;
+    margin: 0;
 }
 
 /* Set padding to keep content from hitting the edges */

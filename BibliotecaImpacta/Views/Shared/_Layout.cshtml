@@ -9,22 +9,26 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="blue lighten-4">
-    <div class="navbar-fixed" style="margin-top: 0; padding-top: 0;">
-
+    <header>
         <nav>
-            <div class="nav-wrapper black">
+            <div class="nav-wrapper black navbar-fixed">
                 @Html.ActionLink("Biblioteca Impacta", "Index", "Home", new { area = "" }, new { @class = "brand-logo right" })
-                <a class="brand-logo right">Biblioteca Impacta</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Livro", "Index", "Livro")</li>
+                    <li>@Html.ActionLink("Autor", "Index", "Autor")</li>
                 </ul>
             </div>
         </nav>
 
-    </div>
+        <ul class="sidenav" id="mobile-demo">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Livro", "Index", "Livro")</li>
+            <li>@Html.ActionLink("Autor", "Index", "Autor")</li>
+        </ul>
+    </header>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -39,6 +43,9 @@
         $(document).ready(function () {
             $('select').formSelect();
             $('.modal').modal();
+            $('.carousel').carousel();
+            $('.parallax').parallax();
+            $('.sidenav').sidenav();
         });
     </script>
     @RenderSection("scripts", required: false)

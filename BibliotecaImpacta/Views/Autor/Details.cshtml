@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BibliotecaImpacta.Models.Livro>
+﻿@model IEnumerable<BibliotecaImpacta.Models.Autor>
 
 @{
     ViewBag.Title = "Details";
@@ -8,9 +8,9 @@
 <div class="col s12 m6">
     <div class="card">
         <div class="card-content">
-            <h2>Lista de Livros</h2>
+            <h2>Lista de Autores</h2>
             <div class="form-group" style="padding:2% 0">
-                @Html.ActionLink("Cadastrar novo Livro", "Create", null, new { @class = "waves-effect waves-light btn" })
+                @Html.ActionLink("Cadastrar novo Autor", "Create", null, new { @class = "waves-effect waves-light btn" })
             </div>
             @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
             {
@@ -20,19 +20,6 @@
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.Nome)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Descricao)
-
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Quantidade)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.TotalPaginas)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Categoria.Nome)
                         </th>
                         <th>
                             Editar
@@ -51,19 +38,7 @@
                                 @Html.DisplayFor(modelItem => item.Nome)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Descricao)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Quantidade)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TotalPaginas)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Categoria.Nome)
-                            </td>
-                            <td>
-                                <a class="btn-floating btn-large waves-effect waves-light red" data-id="0" href="@Url.Action("Edit", "Livro", new { Id = item.Id })"><i class="material-icons">edit</i></a>
+                                <a class="btn-floating btn-large waves-effect waves-light red" data-id="0" href="@Url.Action("Edit", "Autor", new { Id = item.Id })"><i class="material-icons">edit</i></a>
                             </td>
                             <td>
                                 <a class="btnExcluirLivro btn-floating btn-large waves-effect waves-light red modal-trigger" data-id="@item.Id"><i class="material-icons">delete</i></a>
@@ -82,6 +57,7 @@
     </div>
 </div>
 
+<!--Modal-->
 <div id="modal" class="modal">
     <div class="modal-content">
         <h4>Você deseja excluir este livro?</h4>
@@ -96,13 +72,13 @@
 
 @section scripts{
     <script defer>
-        var livroId;
-        var livroNome;
+        var autorId;
+        var autorNome;
         $(".btnExcluirLivro").click(function () {
-            livroId = $(this).attr('data-id');
-            livroNome = $('td[id="' + livroId + '"]').text().trim();
-            $('i[id="nome"]').text(livroNome);
-            $("#modal").modal("open")
+            autorId = $(this).attr('data-id');
+            autorNome = $('td[id="' + autorId + '"]').text().trim();
+            $('i[id="nome"]').text(autorNome);
+            $("#modal").modal("open");
         });
 
         $("#btnConfirmarExclusao").click(function () {
@@ -114,7 +90,7 @@
                 type: 'Post',
                 data: {
                     __RequestVerificationToken: token,
-                    Id: livroId
+                    Id: autorId
                 },
                 success: function () {
                     return window.location.reload();

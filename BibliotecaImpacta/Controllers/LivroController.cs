@@ -23,7 +23,7 @@ namespace BibliotecaImpacta.Controllers
         // GET: Livro/Details/5
         public ActionResult Details()
         {
-            List<Livro> livros = DB.Livros.ToList();
+            List<Livro> livros = DB.Livros.Include("Categoria").ToList();
             return View(livros);
         }
 

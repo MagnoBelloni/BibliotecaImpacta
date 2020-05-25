@@ -6,10 +6,10 @@ namespace BibliotecaImpacta.DataContext
 {
     public class BibliotecaDB : DbContext
     {
-        public BibliotecaDB() : base("BibliotecaDB")
-        {
+        //public BibliotecaDB() : base("BibliotecaDB")
+        //{
 
-        }
+        //}
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
